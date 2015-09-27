@@ -23,9 +23,10 @@ public class Players3 extends AppCompatActivity {
     }
 
     public void showWinner(View view) {
+        WinningPlayer winPlayer = new WinningPlayer();
         Button button = (Button)view;
         String winner = button.getText().toString();
-        WinningPlayer.popUpBox(this, winner);
+        winPlayer.popUpBox(this, winner);
     }
 
     @Override

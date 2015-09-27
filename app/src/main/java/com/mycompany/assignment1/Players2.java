@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class Players2 extends AppCompatActivity {
+public class Players2 extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,10 @@ public class Players2 extends AppCompatActivity {
     //Try adding a message attribute to html on click somehow
     //
     public void showWinner(View view) {
+        WinningPlayer winPlayer = new WinningPlayer();
         Button button = (Button)view;
         String winner = button.getText().toString();
-        WinningPlayer.popUpBox(this,winner);
+        winPlayer.popUpBox(this, winner);
     }
 
     @Override

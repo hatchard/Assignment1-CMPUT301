@@ -11,9 +11,10 @@ public class ReactionTimer extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        WinningPlayer winPlayer = new WinningPlayer();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reaction_timer);
-        WinningPlayer.preReaction(this);
+        winPlayer.preReaction(this);
     }
 
     @Override
