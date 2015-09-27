@@ -6,29 +6,29 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
-public class ActivityChoice extends AppCompatActivity {
+public class Players2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_choice);
+        setContentView(R.layout.activity_players2);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity_choice, menu);
+        getMenuInflater().inflate(R.menu.menu_players2, menu);
         return true;
     }
 
-    //http://stackoverflow.com/questions/24610527/how-do-i-get-a-button-to-open-another-activity-in-android-studio 2015/09/26
-    public void goToPlayerSelection(View view) {
-        startActivity(new Intent(ActivityChoice.this, Multiplayer.class));
-    }
-
-    public void goToReactionTimer(View view) {
-        startActivity(new Intent(ActivityChoice.this, ReactionTimer.class));
+    //Try adding a message attribute to html on click somehow
+    //
+    public void showWinner(View view) {
+        Button button = (Button)view;
+        String winner = button.getText().toString();
+        WinningPlayer.popUpBox(this,winner);
     }
 
     @Override
