@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class Players3 extends AppCompatActivity {
 
@@ -18,6 +20,12 @@ public class Players3 extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_players3, menu);
         return true;
+    }
+
+    public void showWinner(View view) {
+        Button button = (Button)view;
+        String winner = button.getText().toString();
+        WinningPlayer.popUpBox(this, winner);
     }
 
     @Override
