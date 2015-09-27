@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class ReactionTimer extends AppCompatActivity {
 
@@ -11,6 +13,7 @@ public class ReactionTimer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reaction_timer);
+        WinningPlayer.preReaction(this);
     }
 
     @Override
@@ -19,6 +22,7 @@ public class ReactionTimer extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_reaction_timer, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
