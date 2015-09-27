@@ -16,7 +16,8 @@
         android:text="Player 1"
         android:id="@+id/button11"
         android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="showWinner"/>
 
     <Button
         android:layout_width="match_parent"
@@ -25,7 +26,8 @@
         android:id="@+id/button12"
         android:layout_below="@+id/button11"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp" />
+        android:layout_marginTop="44dp"
+        android:onClick="showWinner"/>
 
     <Button
         android:layout_width="match_parent"
@@ -34,7 +36,8 @@
         android:id="@+id/button13"
         android:layout_below="@+id/button12"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="98dp" />
+        android:layout_marginTop="98dp"
+        android:onClick="showWinner"/>
 
     <Button
         android:layout_width="match_parent"
@@ -42,6 +45,7 @@
         android:text="Player 4"
         android:id="@+id/button14"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="showWinner"/>
 
 </RelativeLayout>
