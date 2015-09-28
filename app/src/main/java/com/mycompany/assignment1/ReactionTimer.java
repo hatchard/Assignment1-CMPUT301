@@ -1,11 +1,21 @@
 package com.mycompany.assignment1;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ReactionTimer extends AppCompatActivity {
 
@@ -14,8 +24,42 @@ public class ReactionTimer extends AppCompatActivity {
         WinningPlayer winPlayer = new WinningPlayer();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reaction_timer);
-        winPlayer.preReaction(this);
+        preReaction(this);
+
     }
+
+    //creates initial popup for the reaction timer game
+    public void preReaction(Activity activity){
+        AlertDialog.Builder popUp = new AlertDialog.Builder(activity);
+        popUp.setMessage("When prompted to go click 'CLICK!' as quickly as you can!").setPositiveButton("Play now!", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Random random = new Random();
+                int min = 10;
+                int max = 2000;
+                int delay = random.nextInt(max - min) + min; //delay between min and max values
+                //long preDelayStart = System.currentTimeMillis();
+               // long timeTaken = getReactionTime(preDelayStart, delay);
+               // long startTime = preDelayStart + delay;
+
+                //http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android 2015-09-27
+                final Handler handler = new Handler();
+                Timer t = new Timer();
+                t.schedule(new TimerTask() {
+                    public void run() {
+                        handler.post(new Runnable() {
+                            public void run() {
+                                TextView textview = (TextView) findViewById(R.id.textView5);
+                                textview.setText("CLICK NOW!");
+                            }
+                        });
+                    }
+                }, delay);
+
+            }
+        }).show();
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
