@@ -37,9 +37,7 @@ public class ReactionTimer extends AppCompatActivity {
                 int min = 10;
                 int max = 2000;
                 int delay = random.nextInt(max - min) + min; //delay between min and max values
-                //long preDelayStart = System.currentTimeMillis();
-               // long timeTaken = getReactionTime(preDelayStart, delay);
-               // long startTime = preDelayStart + delay;
+
 
                 //http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android 2015-09-27
                 final Handler handler = new Handler();
@@ -50,10 +48,35 @@ public class ReactionTimer extends AppCompatActivity {
                             public void run() {
                                 TextView textview = (TextView) findViewById(R.id.textView5);
                                 textview.setText("CLICK NOW!");
+                                long start = System.currentTimeMillis();
+                                displayReactionTime(start);
                             }
                         });
                     }
                 }, delay);
+
+            }
+        }).show();
+    }
+
+    //calculate the time between message displayed and user click
+    public void displayReactionTime(final long begin) {
+        Button button = (Button) findViewById(R.id.button15);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                long end = System.currentTimeMillis();
+                long totalTime = end - begin;
+                reactionTimePopUp(totalTime);
+            }
+        });
+    }
+
+    //display pop u box with reaction time results
+    public void reactionTimePopUp(long totalTime){
+        AlertDialog.Builder popUp  = new AlertDialog.Builder(this);
+        popUp.setMessage("Your reaction time was " + totalTime + " ms! ").setPositiveButton("Try again!", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
 
             }
         }).show();
