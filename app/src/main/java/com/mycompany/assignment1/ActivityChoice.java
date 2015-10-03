@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class ActivityChoice extends AppCompatActivity {
-
+    //Statistics stat = new Statistics();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +31,11 @@ public class ActivityChoice extends AppCompatActivity {
         startActivity(new Intent(ActivityChoice.this, ReactionTimer.class));
     }
 
+
     public void goToDisplayStats(View view) {
         startActivity(new Intent(ActivityChoice.this, Statistics.class));
+
+
     }
 
     @Override

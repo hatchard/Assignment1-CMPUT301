@@ -30,21 +30,17 @@ import android.widget.AdapterView;
 
 public class Statistics extends AppCompatActivity {
     //Save Reaction Times
-/*
-Reaction time stat requirements:
-minimum time of all reaction times, the last 10 times, and the last 100 times.
-maximum time of all reaction times, the last 10 times, and the last 100 times.
-average time of all reaction times, the last 10 times, and the last 100 times.
-median time of all reaction times, the last 10 times, and the last 100 times.
-*/
+
     //declaring so many variables and things
+    public SortStats sortStats = new SortStats();
     private static final String FILENAME = "reactionTimerStats";
     private ArrayList<Long> timesArray = new ArrayList<>(); //took out specifics for now
-
+    public ArrayList<Long> oldTimesArray = new ArrayList<>(); //makes a list for the file to load to
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        loadFromFile(); //get the stuff from the file if anything in there so that it can be displayed
 
         //Button emailButton = (Button) findViewById(R.id.email);
        // Button clearButton = (Button) findViewById(R.id.clear);
@@ -83,12 +79,14 @@ median time of all reaction times, the last 10 times, and the last 100 times.
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             //https://google-gson.googlecode.com/svn/trunk/gsn/docs/javadocs/com/google/gson/Gson.html, 2015-09-23l
-            Type arrayListType = new TypeToken<ArrayList<ReactionTimer>>() {}.getType();
-            timesArray = gson.fromJson(in,arrayListType);
+            Type arrayListType = new TypeToken<ArrayList<Long>>() {}.getType();
+            oldTimesArray = gson.fromJson(in,arrayListType);
+            sortStats.sortIt(oldTimesArray);
+
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            timesArray = new ArrayList<>();
+            oldTimesArray = new ArrayList<>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
