@@ -2,6 +2,7 @@ package com.mycompany.assignment1;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -19,11 +20,26 @@ import java.util.TimerTask;
 
 public class ReactionTimer extends AppCompatActivity implements Reaction{
     private Long time;
-    ReactionTimer yourTime;
-    public ReactionTimer(){}
+    Long totalTime;
+    //public ReactionTimer(){}
+    public Statistics stat = new Statistics();
 
-    public ReactionTimer(Long time){
-        this.setTime(time);
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //WinningPlayer winPlayer = new WinningPlayer();
+        //yourTime = new ReactionTimer();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reaction_timer);
+        preReaction();
+
+        final AlertDialog.Builder popUp = new AlertDialog.Builder(this);
+        popUp.setMessage("When prompted to go click 'CLICK!' as quickly as you can!").setPositiveButton("Play now!", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                preReaction();
+            }
+        }).show();
     }
 
     public void setTime(Long time) {
@@ -33,21 +49,9 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
         return time;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        WinningPlayer winPlayer = new WinningPlayer();
-        yourTime = new ReactionTimer();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reaction_timer);
-        preReaction(this);
-
-    }
-
     //creates initial popup for the reaction timer game
-    public void preReaction(Activity activity){
-        AlertDialog.Builder popUp = new AlertDialog.Builder(activity);
-        popUp.setMessage("When prompted to go click 'CLICK!' as quickly as you can!").setPositiveButton("Play now!", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+    public void preReaction(){
+
                 Random random = new Random();
                 int min = 10;
                 int max = 2000;
@@ -77,8 +81,6 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
                     }
                 }, delay);
 
-            }
-        }).show();
     }
 
     //calculate the time between message displayed and user click
@@ -87,23 +89,24 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long end = System.currentTimeMillis();
-                long totalTime = end - begin;
-                yourTime.setTime(totalTime);
-
+                Long end = System.currentTimeMillis();
+                totalTime = end - begin;
+                setTime(totalTime);
                 //stop the timer
                 timer.cancel();
-                reactionTimePopUp(yourTime);
+                reactionTimePopUp(totalTime);
 
 
             }
         });
+
     }
 
     //display pop u box with reaction time results
-    public void reactionTimePopUp(ReactionTimer totalTime){
+    public void reactionTimePopUp(Long totalTime){
+        stat.saveThatShit(totalTime, this.getBaseContext());
         AlertDialog.Builder popUp  = new AlertDialog.Builder(this);
-        popUp.setMessage("Your reaction time was " + totalTime.getTime() + " ms! ").setPositiveButton("Try again!", new DialogInterface.OnClickListener() {
+        popUp.setMessage("Your reaction time was " + totalTime + " ms! ").setPositiveButton("Try again!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //reset to play again
                 resetIt();
@@ -115,7 +118,7 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
         //reset the original text
         TextView textview = (TextView) findViewById(R.id.textView5);
         textview.setText("get Ready..");
-        preReaction(this);
+        preReaction();
 
 
     }
@@ -126,9 +129,8 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
         TextView textview = (TextView) findViewById(R.id.textView5);
         textview.setText("You clicked too soon..try again without cheating! Get ready..");
         //start over
-        preReaction(this);
+        preReaction();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

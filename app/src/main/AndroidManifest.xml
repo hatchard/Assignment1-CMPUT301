@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mycompany.assignment1" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ActivityChoice"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Multiplayer"
+            android:label="@string/title_activity_multiplayer" >
+        </activity>
+        <activity
+            android:name=".Players2"
+            android:label="@string/title_activity_players2" >
+        </activity>
+        <activity
+            android:name=".Players3"
+            android:label="@string/title_activity_players3" >
+        </activity>
+        <activity
+            android:name=".Players4"
+            android:label="@string/title_activity_players4" >
+        </activity>
+        <activity
+            android:name=".ReactionTimer"
+            android:label="@string/title_activity_reaction_timer" >
+        </activity>
+        <activity
+            android:name=".Statistics"
+            android:label="@string/title_activity_statistics" >
+        </activity>
+    </application>
+
+</manifest>

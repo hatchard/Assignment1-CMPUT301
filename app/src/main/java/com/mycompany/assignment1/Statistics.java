@@ -1,5 +1,6 @@
 package com.mycompany.assignment1;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import android.widget.AdapterView;
 
 public class Statistics extends AppCompatActivity {
     //Save Reaction Times
@@ -35,21 +37,18 @@ maximum time of all reaction times, the last 10 times, and the last 100 times.
 average time of all reaction times, the last 10 times, and the last 100 times.
 median time of all reaction times, the last 10 times, and the last 100 times.
 */
-
+    //declaring so many variables and things
     private static final String FILENAME = "reactionTimerStats";
-    private ArrayList<ReactionTimer> times = new ArrayList<>(); //took out specifics for now
-    private  ArrayAdapter<ReactionTimer> adapter;
-    private TableLayout results; //not so sure??
+    private ArrayList<Long> timesArray = new ArrayList<>(); //took out specifics for now
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-        Button emailButton = (Button) findViewById(R.id.email);
-        Button clearButton = (Button) findViewById(R.id.clear);
-        results = (TableLayout) findViewById(R.id.table); //table??
-
+        //Button emailButton = (Button) findViewById(R.id.email);
+       // Button clearButton = (Button) findViewById(R.id.clear);
+       // timesList = (ListView) findViewById(R.id.); //will need to find a way to generalize this
         /*
         emailButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -59,24 +58,24 @@ median time of all reaction times, the last 10 times, and the last 100 times.
                 saveInFile();
                 adapter.notifyDataSetChanged();
             }
-        });*/
+        });
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                times.clear();
+                timesArray.clear();
                 saveInFile();
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
             }
-        });
+        });*/
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        loadFromFile();
-    }
+    //maybe i dont actually need this here? I'm really not even sure anymore..what is life?
+    public void saveThatShit(Long saveIT, Context context) {
+        this.timesArray.add(saveIT); //add the new item to the list
+        saveInFile(context);
 
+    }
     private void loadFromFile() {
 
         try {
@@ -85,11 +84,11 @@ median time of all reaction times, the last 10 times, and the last 100 times.
             Gson gson = new Gson();
             //https://google-gson.googlecode.com/svn/trunk/gsn/docs/javadocs/com/google/gson/Gson.html, 2015-09-23l
             Type arrayListType = new TypeToken<ArrayList<ReactionTimer>>() {}.getType();
-            times = gson.fromJson(in,arrayListType);
+            timesArray = gson.fromJson(in,arrayListType);
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            times = new ArrayList<>();
+            timesArray = new ArrayList<>();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             throw new RuntimeException(e);
@@ -98,12 +97,12 @@ median time of all reaction times, the last 10 times, and the last 100 times.
 
 
 
-    private void saveInFile() {
+    private void saveInFile(Context context) {
         try {
-            FileOutputStream fos = openFileOutput(FILENAME,0);
+            FileOutputStream fos = context.openFileOutput(FILENAME,Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
-            gson.toJson(times, out);
+            gson.toJson(this.timesArray, out);
             out.flush();
             fos.close();
         } catch (FileNotFoundException e) {
