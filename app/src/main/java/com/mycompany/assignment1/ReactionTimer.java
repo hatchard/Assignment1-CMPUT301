@@ -19,6 +19,7 @@ import java.util.TimerTask;
 
 public class ReactionTimer extends AppCompatActivity implements Reaction{
     private Long time;
+    ReactionTimer yourTime;
     public ReactionTimer(){}
 
     public ReactionTimer(Long time){
@@ -35,6 +36,7 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         WinningPlayer winPlayer = new WinningPlayer();
+        yourTime = new ReactionTimer();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reaction_timer);
         preReaction(this);
@@ -87,10 +89,11 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
             public void onClick(View view) {
                 long end = System.currentTimeMillis();
                 long totalTime = end - begin;
+                yourTime.setTime(totalTime);
 
                 //stop the timer
                 timer.cancel();
-                reactionTimePopUp(totalTime);
+                reactionTimePopUp(yourTime);
 
 
             }
@@ -98,9 +101,9 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
     }
 
     //display pop u box with reaction time results
-    public void reactionTimePopUp(Long totalTime){
+    public void reactionTimePopUp(ReactionTimer totalTime){
         AlertDialog.Builder popUp  = new AlertDialog.Builder(this);
-        popUp.setMessage("Your reaction time was " + totalTime + " ms! ").setPositiveButton("Try again!", new DialogInterface.OnClickListener() {
+        popUp.setMessage("Your reaction time was " + totalTime.getTime() + " ms! ").setPositiveButton("Try again!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //reset to play again
                 resetIt();
