@@ -1,0 +1,299 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+
+
+    tools:context="com.mycompany.assignment1.Statistics">
+
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:id="@+id/clear"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:id="@+id/email"
+        android:layout_above="@+id/clear"
+        android:layout_centerHorizontal="true" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/table">
+        <TableRow
+            android:padding="18dip"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Reaction Time Statistics"
+                android:layout_column="0"
+                android:id="@+id/title"
+                android:layout_span="4" />
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Min Time"
+                android:gravity="center"
+                android:id="@+id/row2col1" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row2col2" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row2col3" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row2col4" />
+
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Max Time"
+                android:gravity="center"
+                android:id="@+id/row3col1" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row3col2" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row3col3" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row3col4" />
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Avg Time"
+                android:gravity="center"
+                android:id="@+id/row4col1" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row4col2" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row4col3" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row4col4" />
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Median Time"
+                android:gravity="center"
+                android:id="@+id/row5col1" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row5col2" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row5col3" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row5col4" />
+        </TableRow>
+
+        <TableRow
+            android:padding="40dip"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Buzzer Statistics"
+                android:layout_column="0"
+                android:id="@+id/title2"
+                android:layout_span="4" />
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Min Time"
+                android:gravity="center"
+                android:id="@+id/row2col1b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row2col2b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row2col3b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row2col4b" />
+
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Max Time"
+                android:gravity="center"
+                android:id="@+id/row3col1b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row3col2b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row3col3b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row3col4b" />
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Avg Time"
+                android:gravity="center"
+                android:id="@+id/row4col1b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row4col2b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row4col3b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row4col4b" />
+        </TableRow>
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Median Time"
+                android:gravity="center"
+                android:id="@+id/row5col1b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row5col2b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row5col3b" />
+            <TextView
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="---"
+                android:gravity="center"
+                android:id="@+id/row5col4b" />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

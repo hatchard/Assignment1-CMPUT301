@@ -31,6 +31,10 @@ public class ActivityChoice extends AppCompatActivity {
         startActivity(new Intent(ActivityChoice.this, ReactionTimer.class));
     }
 
+    public void goToDisplayStats(View view) {
+        startActivity(new Intent(ActivityChoice.this, Statistics.class));
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

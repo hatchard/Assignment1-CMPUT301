@@ -17,7 +17,20 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ReactionTimer extends AppCompatActivity {
+public class ReactionTimer extends AppCompatActivity implements Reaction{
+    private Long time;
+    public ReactionTimer(){}
+
+    public ReactionTimer(Long time){
+        this.setTime(time);
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
+    public Long getTime() {
+        return time;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +50,26 @@ public class ReactionTimer extends AppCompatActivity {
                 int min = 10;
                 int max = 2000;
                 int delay = random.nextInt(max - min) + min; //delay between min and max values
-
+                final long delayTime = System.currentTimeMillis() + delay;
 
                 //http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android 2015-09-27
                 final Handler handler = new Handler();
-                Timer t = new Timer();
-                t.schedule(new TimerTask() {
+                final Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
                     public void run() {
                         handler.post(new Runnable() {
                             public void run() {
                                 TextView textview = (TextView) findViewById(R.id.textView5);
                                 textview.setText("CLICK NOW!");
                                 long start = System.currentTimeMillis();
-                                displayReactionTime(start);
+                                if (delayTime > start) {
+                                    //stop the timer
+                                    timer.cancel();
+                                    complain();
+                                } else {
+                                    displayReactionTime(start, timer);
+                                }
+
                             }
                         });
                     }
@@ -60,28 +80,51 @@ public class ReactionTimer extends AppCompatActivity {
     }
 
     //calculate the time between message displayed and user click
-    public void displayReactionTime(final long begin) {
+    public void displayReactionTime(final long begin, final Timer timer) {
         Button button = (Button) findViewById(R.id.button15);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 long end = System.currentTimeMillis();
                 long totalTime = end - begin;
+
+                //stop the timer
+                timer.cancel();
                 reactionTimePopUp(totalTime);
+
+
             }
         });
     }
 
     //display pop u box with reaction time results
-    public void reactionTimePopUp(long totalTime){
+    public void reactionTimePopUp(Long totalTime){
         AlertDialog.Builder popUp  = new AlertDialog.Builder(this);
         popUp.setMessage("Your reaction time was " + totalTime + " ms! ").setPositiveButton("Try again!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-
+                //reset to play again
+                resetIt();
             }
         }).show();
     }
 
+    public void resetIt(){
+        //reset the original text
+        TextView textview = (TextView) findViewById(R.id.textView5);
+        textview.setText("get Ready..");
+        preReaction(this);
+
+
+    }
+
+    public void complain(){
+        //complain to the user for clicking to soon
+        //LATER WILL HAVE TO ACCOUNT FOR THIS IN HOW THE STATS ARE RECORDED
+        TextView textview = (TextView) findViewById(R.id.textView5);
+        textview.setText("You clicked too soon..try again without cheating! Get ready..");
+        //start over
+        preReaction(this);
+    }
 
 
     @Override
