@@ -3,14 +3,6 @@ package com.mycompany.assignment1;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -26,11 +18,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
-import android.widget.AdapterView;
+
 
 public class Statistics extends AppCompatActivity {
     //Save Reaction Times
@@ -56,8 +46,7 @@ public class Statistics extends AppCompatActivity {
         setContentView(R.layout.activity_statistics);
         initialized = false;
         displayBuzzerStats(); //will have to go into buzzer before can go into stats this way..
-
-        //loadFromFile(); //get the stuff from the file if anything in there so that it can be displayed
+        //displayStats(); THIS WILL HAVE TO END UP HERE
     }
 
 
@@ -89,9 +78,9 @@ public class Statistics extends AppCompatActivity {
     }
 
     public void saveThatBuzzerShit(String playerMode, int winner, Context context) { //pass the winner in as the index so can use it as the index?
-        if(initialized == false){
+        if(initialized == true){
             makeStartList();
-            initialized = true;
+            initialized = false;
             saveInBuzzerFile(context);
         }
         loadFromBuzzerFile(context);
@@ -154,40 +143,32 @@ public class Statistics extends AppCompatActivity {
         //wins for player 1 2player mode
         TextView textviewB = (TextView) findViewById(R.id.row2col2b);
         textviewB.setText(oldWinnerList.get("2player").get(0).toString());
-        //max10
-        /*
-        TextView textview1 = (TextView) findViewById(R.id.row3col2);
-        textview1.setText(results.get(1).toString());
-        //avg10
-        TextView textview2 = (TextView) findViewById(R.id.row4col2);
-        textview2.setText(results.get(2).toString());
-        //med10
-        TextView textview3 = (TextView) findViewById(R.id.row5col2);
-        textview3.setText(results.get(3).toString());
-        //min100
-        TextView textview4 = (TextView) findViewById(R.id.row2col3);
-        textview4.setText(results.get(4).toString());
-        //max100
-        TextView textview5 = (TextView) findViewById(R.id.row3col3);
-        textview5.setText(results.get(5).toString());
-        //avg100
-        TextView textview6 = (TextView) findViewById(R.id.row4col3);
-        textview6.setText(results.get(6).toString());
-        //med100
-        TextView textview7 = (TextView) findViewById(R.id.row5col3);
-        textview7.setText(results.get(7).toString());
-        //minAll
-        TextView textview8 = (TextView) findViewById(R.id.row2col4);
-        textview8.setText(results.get(8).toString());
-        //maxAll
-        TextView textview9 = (TextView) findViewById(R.id.row3col4);
-        textview9.setText(results.get(9).toString());
-        //avgAll
-        TextView textview10 = (TextView) findViewById(R.id.row4col4);
-        textview10.setText(results.get(10).toString());
-        //medAll
-        TextView textview11 = (TextView) findViewById(R.id.row5col4);
-        textview11.setText(results.get(11).toString());*/
+        //wins for player 2 2player
+        TextView textview1B = (TextView) findViewById(R.id.row3col2b);
+        textview1B.setText(oldWinnerList.get("2player").get(1).toString());
+        //wins for player 1 3 player mode
+
+        TextView textview4B = (TextView) findViewById(R.id.row2col3b);
+        textview4B.setText(oldWinnerList.get("3player").get(0).toString());
+        //wins for player 2 3 player mode
+        TextView textview5B = (TextView) findViewById(R.id.row3col3b);
+        textview5B.setText(oldWinnerList.get("3player").get(1).toString());
+        //wins for player 3 3 player mode
+        TextView textview6B = (TextView) findViewById(R.id.row4col3b);
+        textview6B.setText(oldWinnerList.get("3player").get(2).toString());
+
+        //player 1 4 player mode
+        TextView textview8B = (TextView) findViewById(R.id.row2col4b);
+        textview8B.setText(oldWinnerList.get("4player").get(0).toString());
+        //player 2 4 player mode
+        TextView textview9B = (TextView) findViewById(R.id.row3col4b);
+        textview9B.setText(oldWinnerList.get("4player").get(1).toString());
+        //player 3 4 player mode
+        TextView textview10B = (TextView) findViewById(R.id.row4col4b);
+        textview10B.setText(oldWinnerList.get("4player").get(2).toString());
+        //player 4 4 player mode
+        TextView textview11B = (TextView) findViewById(R.id.row5col4b);
+        textview11B.setText(oldWinnerList.get("4player").get(3).toString());
     }
 
     public void displayStats(ArrayList<Long> results) {

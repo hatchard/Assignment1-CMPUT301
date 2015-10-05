@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class Players3 extends AppCompatActivity {
-
+    public Statistics stat = new Statistics();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,11 @@ public class Players3 extends AppCompatActivity {
         Button button = (Button)view;
         String winner = button.getText().toString();
         winPlayer.popUpBox(this, winner);
+        int playerNum;
+        if(winner.contains("1")){ playerNum = 0; }
+        else if(winner.contains("2")){playerNum = 1;}
+        else{ playerNum = 2;}
+        stat.saveThatBuzzerShit("3player", playerNum, this.getBaseContext());
     }
 
     @Override
