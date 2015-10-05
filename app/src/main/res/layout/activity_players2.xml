@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="5dp"
+    android:background="#005200"
     tools:context="com.mycompany.assignment1.Players2">
 
 
@@ -16,7 +17,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center"
-        android:background="#00f"/>
+        android:background="#00f"
+        android:textSize="65dp" />
 
     <Button
         android:layout_width="fill_parent"
@@ -28,7 +30,8 @@
         android:onClick="showWinner"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:background="#f00"/>
+        android:background="#f00"
+        android:textSize="65dp" />
 
 
 </RelativeLayout>
