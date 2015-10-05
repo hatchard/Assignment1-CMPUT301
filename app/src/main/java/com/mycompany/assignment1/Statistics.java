@@ -3,6 +3,9 @@ package com.mycompany.assignment1;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -37,22 +40,55 @@ public class Statistics extends AppCompatActivity {
     public static ArrayList players2;
     public static ArrayList players3;
     public static ArrayList players4;
-    boolean initialized;
+    //boolean initialized;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        initialized = false;
-        //NEED TO FIGURE OUT HOW TO PASS THE CONTEXT TO THISSSSS
+        //initialized = true;
+        if(oldWinnerList == null){
+            makeStartList(getBaseContext());
+        }
+
+        //Button emailButton = (Button) findViewById(R.id.email);
+        Button clearButton = (Button) findViewById(R.id.clear);
+
+        /*
+        emailButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                String text = bodyText.getText().toString();
+                tweets.add(new NormalTweet(text));
+                saveInFile();
+                adapter.notifyDataSetChanged();
+            }
+        });*/
+/*
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Long temp = Long.valueOf(0);
+                oldTimesArray.clear();
+                oldTimesArray.add(temp);
+                results.clear();
+                results.add(temp);
+                saveInFile(getBaseContext());
+                displayStats(results);
+                oldWinnerList.clear();
+                saveInBuzzerFile(getBaseContext());
+                displayBuzzerStats();
+            }
+        });*/
         loadFromBuzzerFile(getBaseContext());
         loadFromFile(getBaseContext());
+        results = sortStats.sortIt(oldTimesArray);
         displayBuzzerStats(); //will have to go into buzzer before can go into stats this way..
         displayStats(results); // THIS WILL HAVE TO END UP HERE
     }
 
 
-    public void makeStartList() {
+    public void makeStartList(Context context) {
         players2 = new ArrayList();
         players3 = new ArrayList();
         players4 = new ArrayList();
@@ -71,14 +107,14 @@ public class Statistics extends AppCompatActivity {
         players4.add(0);
         players4.add(0);
         oldWinnerList.put("4player", players4);
+        saveInBuzzerFile(context);
 
     }
     //maybe i dont actually need this here? I'm really not even sure anymore..what is life?
     public void saveThatShit(Long saveIT, Context context) {
-        if(initialized == true){
-            makeStartList();
-            initialized = false;
-            saveInFile(context);
+        if(oldTimesArray == null){
+            makeStartList(context);
+            saveInBuzzerFile(context);
         }
         loadFromFile(context);
         this.oldTimesArray.add(saveIT); //add the new item to the list
@@ -87,9 +123,8 @@ public class Statistics extends AppCompatActivity {
     }
 
     public void saveThatBuzzerShit(String playerMode, int winner, Context context) { //pass the winner in as the index so can use it as the index?
-        if(initialized == true){
-            makeStartList();
-            initialized = false;
+        if(oldWinnerList == null){
+            makeStartList(context);
             saveInBuzzerFile(context);
         }
         loadFromBuzzerFile(context);
@@ -112,7 +147,6 @@ public class Statistics extends AppCompatActivity {
             //https://google-gson.googlecode.com/svn/trunk/gsn/docs/javadocs/com/google/gson/Gson.html, 2015-09-23l
             Type arrayListType = new TypeToken<ArrayList<Long>>() {}.getType();
             oldTimesArray = gson.fromJson(in, arrayListType);
-            results = sortStats.sortIt(oldTimesArray);
             //displayStats(results);
 
 
@@ -246,10 +280,11 @@ public class Statistics extends AppCompatActivity {
 
     private void saveInBuzzerFile(Context context) {
         try {
+            String hi = BUZZERFILENAME;
             FileOutputStream fosB = context.openFileOutput(BUZZERFILENAME,Context.MODE_PRIVATE);
             BufferedWriter outB = new BufferedWriter(new OutputStreamWriter(fosB));
             Gson gsonB = new Gson();
-            gsonB.toJson(this.oldWinnerList, outB);
+            gsonB.toJson(oldWinnerList, outB);
             outB.flush();
             fosB.close();
         } catch (FileNotFoundException e) {

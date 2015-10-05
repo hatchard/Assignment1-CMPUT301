@@ -52,7 +52,7 @@ public class SortStats {
             sort10(statsCopy);
             sort100(statsCopy);
             sortAll(statsCopy);
-        }
+        } else {}
 
 
         results.add(min10);
@@ -74,10 +74,10 @@ public class SortStats {
 
     public void sortAll(ArrayList all) {
         Collections.sort(all);
-        int midIndex = (all.size()/2);
-        maxAll = (Long)Collections.max(all);
-        minAll = (Long)Collections.min(all);
-        medAll = (Long)all.get(midIndex); //get middle number
+        int midIndex = (all.size() / 2);
+        maxAll = (Long) Collections.max(all);
+        minAll = (Long) Collections.min(all);
+        medAll = (Long) all.get(midIndex); //get middle number
         avgAll = calculateAverage(all);
 
     }
