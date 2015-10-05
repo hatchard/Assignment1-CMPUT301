@@ -38,6 +38,7 @@ public class Players4 extends AppCompatActivity {
         return true;
     }
 
+    //same as 2 and 3 player modes except for 4
     public void showWinner(View view) {
         WinningPlayer winPlayer = new WinningPlayer();
         Button button = (Button)view;

@@ -22,7 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -43,8 +42,6 @@ import java.util.NoSuchElementException;
 
 
 public class Statistics extends AppCompatActivity {
-    //Save Reaction Times
-
 
     //declaring so many variables and things
     public SortStats sortStats = new SortStats();
@@ -63,7 +60,7 @@ public class Statistics extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        //initialized = true;
+        //check if statistics have already been saved, if not, create the inital set up of them
         try {
             loadFromBuzzerFile(getBaseContext());
         } catch (NoSuchElementException e) {
@@ -71,12 +68,11 @@ public class Statistics extends AppCompatActivity {
             saveInBuzzerFile(getBaseContext()); //changed this?
         }
 
-
-
+        //get the buttons ready
         Button emailButton = (Button) findViewById(R.id.email);
         Button clearButton = (Button) findViewById(R.id.clear);
 
-
+        //when email is presseed send the stats into the email : note, you do need to be signed into the app in order to do this
         emailButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -86,6 +82,7 @@ public class Statistics extends AppCompatActivity {
             }
         });
 
+        //clear all of the stats
         clearButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Long temp = Long.valueOf(0);
@@ -103,10 +100,12 @@ public class Statistics extends AppCompatActivity {
         loadFromBuzzerFile(getBaseContext());
         loadFromFile(getBaseContext());
         results = sortStats.sortIt(oldTimesArray);
-        displayBuzzerStats(); //will have to go into buzzer before can go into stats this way..
-        displayStats(results); // THIS WILL HAVE TO END UP HERE
+        //display the stats onto the screen
+        displayBuzzerStats();
+        displayStats(results);
     }
 
+    //get the statistics into a string so that they can be emailed
     public StringBuilder getStatistics(){
         String startString = "Format: [Min, Max, Avg, Med] \n 10:";
         int counter = 0;
@@ -133,6 +132,7 @@ public class Statistics extends AppCompatActivity {
         return statsString;
     }
 
+    //make the email and compose it
     //https://developer.android.com/guide/components/intents-common.html 10-04-15
     public void composeEmail(String subject, String info) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -145,7 +145,7 @@ public class Statistics extends AppCompatActivity {
         }
     }
 
-
+    //create the initial list with things set up to the proper size
     public void makeStartList(Context context) {
         players2 = new ArrayList();
         players3 = new ArrayList();
@@ -168,7 +168,7 @@ public class Statistics extends AppCompatActivity {
         saveInBuzzerFile(context);
 
     }
-    //maybe i dont actually need this here? I'm really not even sure anymore..what is life?
+    //called from the reaction timer to start the process of saving the data into the file
     public void saveThatShit(Long saveIT, Context context) {
         if(oldTimesArray == null){
             makeStartList(context);
@@ -180,6 +180,7 @@ public class Statistics extends AppCompatActivity {
 
     }
 
+    //same thing except from the buzzer, so from all of the player modes
     public void saveThatBuzzerShit(String playerMode, int winner, Context context) { //pass the winner in as the index so can use it as the index?
         if(oldWinnerList == null){
             makeStartList(context);
@@ -197,6 +198,7 @@ public class Statistics extends AppCompatActivity {
         oldWinnerList.put(playerMode,whoWon);
         saveInBuzzerFile(context);
     }
+        //load any data previously stored in the file for the reaction timer
         public void loadFromFile(Context context) {
         try {
             FileInputStream fis = context.openFileInput(FILENAME);
@@ -217,6 +219,7 @@ public class Statistics extends AppCompatActivity {
         }
     }
 
+    //load any data previously stored in the buzzer stats file
     private void loadFromBuzzerFile(Context context) {
         try {
             FileInputStream fisB = context.openFileInput(BUZZERFILENAME);
@@ -240,6 +243,7 @@ public class Statistics extends AppCompatActivity {
     //public ArrayList winTracker(HashMap oldWinnerList){
 
     //}
+    //display the buzzer stats into the table view
     public void displayBuzzerStats(){
         //wins for player 1 2player mode
         TextView textviewB = (TextView) findViewById(R.id.row2col2b);
@@ -272,6 +276,7 @@ public class Statistics extends AppCompatActivity {
         textview11B.setText(oldWinnerList.get("4player").get(3).toString());
     }
 
+    //display the reaction timer stats into the table view
     public void displayStats(ArrayList<Long> results) {
         if(results.size() < 12){
             int addFill = 12 - results.size();
@@ -319,6 +324,7 @@ public class Statistics extends AppCompatActivity {
 
     }
 
+    //save reaction timer stuff into its file
     private void saveInFile(Context context) {
         try {
             FileOutputStream fos = context.openFileOutput(FILENAME,Context.MODE_PRIVATE);
@@ -336,6 +342,7 @@ public class Statistics extends AppCompatActivity {
         }
     }
 
+    //save buzzer stats into their file
     private void saveInBuzzerFile(Context context) {
         try {
             String hi = BUZZERFILENAME;
@@ -353,11 +360,4 @@ public class Statistics extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
-
-
-
-    //Save Buzzer info according to number of players
-
-
-
 }

@@ -16,12 +16,9 @@
 
 package com.mycompany.assignment1;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -48,6 +45,7 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reaction_timer);
 
+        //sets up initial instruction dialog box
         final AlertDialog.Builder popUp = new AlertDialog.Builder(this);
         popUp.setMessage("When prompted to go click 'CLICK!' as quickly as you can!").setPositiveButton("Play now!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -66,35 +64,35 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
 
     //creates initial popup for the reaction timer game
     public void preReaction(){
+        //this gets the delay and checks that the button wasn't clicked before it was allowed to be
+        Random random = new Random();
+        int min = 10;
+        int max = 2000;
+        int delay = random.nextInt(max - min) + min; //delay between min and max values
+        final long delayTime = System.currentTimeMillis() + delay;
 
-                Random random = new Random();
-                int min = 10;
-                int max = 2000;
-                int delay = random.nextInt(max - min) + min; //delay between min and max values
-                final long delayTime = System.currentTimeMillis() + delay;
+        //http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android 2015-09-27
+        final Handler handler = new Handler();
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+            handler.post(new Runnable() {
+                public void run() {
+                TextView textview = (TextView) findViewById(R.id.textView5);
+                textview.setText("CLICK NOW!");
+                long start = System.currentTimeMillis();
+                if (delayTime > start) {
+                    //stop the timer
+                    timer.cancel();
+                    complain();
+                } else {
+                    displayReactionTime(start, timer);
+                }
 
-                //http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android 2015-09-27
-                final Handler handler = new Handler();
-                final Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    public void run() {
-                        handler.post(new Runnable() {
-                            public void run() {
-                                TextView textview = (TextView) findViewById(R.id.textView5);
-                                textview.setText("CLICK NOW!");
-                                long start = System.currentTimeMillis();
-                                if (delayTime > start) {
-                                    //stop the timer
-                                    timer.cancel();
-                                    complain();
-                                } else {
-                                    displayReactionTime(start, timer);
-                                }
-
-                            }
-                        });
-                    }
-                }, delay);
+                }
+            });
+            }
+        }, delay);
 
     }
 
@@ -134,13 +132,10 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
         TextView textview = (TextView) findViewById(R.id.textView5);
         textview.setText("get Ready..");
         preReaction();
-
-
     }
 
     public void complain(){
         //complain to the user for clicking to soon
-        //LATER WILL HAVE TO ACCOUNT FOR THIS IN HOW THE STATS ARE RECORDED
         TextView textview = (TextView) findViewById(R.id.textView5);
         textview.setText("You clicked too soon..try again without cheating! Get ready..");
         //start over

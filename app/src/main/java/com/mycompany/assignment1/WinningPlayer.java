@@ -27,6 +27,7 @@ import java.util.Random;
 /**
  * Created by Me on 2015-09-26.
  */
+//tells who won for the multiplayer modes
 public class WinningPlayer {
     //creates pop ups for whichever player clicks the gameshow buzzer first
     public void popUpBox(Activity activity, String winner){

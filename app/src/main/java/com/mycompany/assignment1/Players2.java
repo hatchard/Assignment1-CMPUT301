@@ -16,7 +16,6 @@
 
 package com.mycompany.assignment1;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,8 +38,7 @@ public class Players2 extends AppCompatActivity  {
         return true;
     }
 
-    //Try adding a message attribute to html on click somehow
-    //
+    //this method displays the pop up box saying which player clicked first, and sends it on to be saveds
     public void showWinner(View view) {
         WinningPlayer winPlayer = new WinningPlayer();
         Button button = (Button)view;

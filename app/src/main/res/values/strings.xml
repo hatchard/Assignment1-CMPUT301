@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Assignment1</string>
+
+    <string name="be_ready">Get ready...</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_multiplayer">Multiplayer</string>
+    <string name="title_activity_players2">Players2</string>
+    <string name="title_activity_players3">Players3</string>
+    <string name="title_activity_players4">Players4</string>
+    <string name="title_activity_reaction_timer">ReactionTimer</string>
+    <string name="title_activity_statistics">Statistics</string>
+
+    <string name="hello_world">Hello world!</string>
+
+</resources>

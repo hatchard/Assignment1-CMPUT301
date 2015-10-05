@@ -16,23 +16,15 @@
 
 package com.mycompany.assignment1;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-/*
-Reaction time stat requirements:
-minimum time of all reaction times, the last 10 times, and the last 100 times.
-maximum time of all reaction times, the last 10 times, and the last 100 times.
-average time of all reaction times, the last 10 times, and the last 100 times.
-median time of all reaction times, the last 10 times, and the last 100 times.
-*/
 
 /**
  * Created by Me on 2015-10-03.
  */
 public class SortStats {
+    //initializes all of them to zero
     Long max10 = Long.valueOf(0);
     Long min10 = Long.valueOf(0);
     Long avg10= Long.valueOf(0);
@@ -49,11 +41,7 @@ public class SortStats {
 
     //sort the stats so that they can be displayed later
     public ArrayList sortIt(ArrayList stats) {
-        ArrayList statsCopy = (ArrayList)stats.clone(); //?
-
-
-        // sort by increasing to get max and min
-        //if bigger than or atleast 100 have to do all three
+        ArrayList statsCopy = (ArrayList)stats.clone(); //need to do this otherwise it can mess up later stats
 
         //just for all
         if(statsCopy.size() < 10) {
@@ -64,13 +52,14 @@ public class SortStats {
             sort10(statsCopy);
             sortAll(statsCopy);
         }
+        //for everything!
         else if(statsCopy.size() >= 100) {
             sort10(statsCopy);
             sort100(statsCopy);
             sortAll(statsCopy);
         } else {}
 
-
+        //add the new sorted results in
         results.add(min10);
         results.add(max10);
         results.add(avg10);
@@ -93,6 +82,7 @@ public class SortStats {
         Collections.sort(all);
         ArrayList subAll = new ArrayList();
         // get rid of the zero place holders
+        //checks that there are not zeros messing with the stats
         int zeroFrequency = Collections.frequency(all, zeros);
         if(zeroFrequency != 0) {
             for(Object i:all){
@@ -101,12 +91,20 @@ public class SortStats {
                     subAll.add(i);
                 }
             }
-            int midIndex = (subAll.size() / 2);
-            maxAll = (Long) Collections.max(subAll);
-            minAll = (Long) Collections.min(subAll);
-            medAll = (Long) all.get(midIndex); //get middle number
-            avgAll = calculateAverage(subAll);
-
+            //if the entire list was empty
+            if(subAll.isEmpty()) {
+                maxAll = zeros;
+                minAll = zeros;
+                medAll = zeros;
+                avgAll = zeros;
+            }
+            else {
+                int midIndex = (subAll.size() / 2);
+                maxAll = (Long) Collections.max(subAll);
+                minAll = (Long) Collections.min(subAll);
+                medAll = (Long) all.get(midIndex); //get middle number
+                avgAll = calculateAverage(subAll);
+            }
         } else {
             int midIndex = (all.size() / 2);
             maxAll = (Long) Collections.max(all);

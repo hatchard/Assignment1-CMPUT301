@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+// The first activity upon starting the app
 public class ActivityChoice extends AppCompatActivity {
     //Statistics stat = new Statistics();
     @Override
@@ -39,6 +40,7 @@ public class ActivityChoice extends AppCompatActivity {
     }
 
     //http://stackoverflow.com/questions/24610527/how-do-i-get-a-button-to-open-another-activity-in-android-studio 2015/09/26
+    //when a button is clicked in this activity, directs you to the corresponding one of these, which proceeds to direct you onwards.
     public void goToPlayerSelection(View view) {
         startActivity(new Intent(ActivityChoice.this, Multiplayer.class));
     }
@@ -50,8 +52,6 @@ public class ActivityChoice extends AppCompatActivity {
 
     public void goToDisplayStats(View view) {
         startActivity(new Intent(ActivityChoice.this, Statistics.class));
-
-
     }
 
     @Override

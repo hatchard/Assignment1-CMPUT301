@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+//this activity lets you select which mode you want to play in
 public class Multiplayer extends AppCompatActivity {
 
     @Override
@@ -38,6 +39,7 @@ public class Multiplayer extends AppCompatActivity {
         return true;
     }
 
+    //sends you to whichever activity you chose
     public void goTo2Player(View view) {
         startActivity(new Intent(Multiplayer.this, Players2.class));
     }
