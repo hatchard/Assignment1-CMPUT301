@@ -39,7 +39,7 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.NoSuchElementException;
 
 
 public class Statistics extends AppCompatActivity {
@@ -64,10 +64,14 @@ public class Statistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         //initialized = true;
-        if(oldWinnerList == null){
+        try {
+            loadFromBuzzerFile(getBaseContext());
+        } catch (NoSuchElementException e) {
             makeStartList(getBaseContext());
             saveInBuzzerFile(getBaseContext()); //changed this?
         }
+
+
 
         Button emailButton = (Button) findViewById(R.id.email);
         Button clearButton = (Button) findViewById(R.id.clear);
