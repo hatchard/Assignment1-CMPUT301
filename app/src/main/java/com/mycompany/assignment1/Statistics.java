@@ -1,6 +1,8 @@
 package com.mycompany.assignment1;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -51,20 +53,18 @@ public class Statistics extends AppCompatActivity {
             makeStartList(getBaseContext());
         }
 
-        //Button emailButton = (Button) findViewById(R.id.email);
+        Button emailButton = (Button) findViewById(R.id.email);
         Button clearButton = (Button) findViewById(R.id.clear);
 
-        /*
+
         emailButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                setResult(RESULT_OK);
-                String text = bodyText.getText().toString();
-                tweets.add(new NormalTweet(text));
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                String sendStats = getStatistics().toString();
+                //String[] recipiant = "";
+                composeEmail("Gameshow Buzzer/Reaction Timer Stats", sendStats);
             }
-        });*/
+        });
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -85,6 +85,36 @@ public class Statistics extends AppCompatActivity {
         results = sortStats.sortIt(oldTimesArray);
         displayBuzzerStats(); //will have to go into buzzer before can go into stats this way..
         displayStats(results); // THIS WILL HAVE TO END UP HERE
+    }
+
+    public StringBuilder getStatistics(){
+        String startString = "Format: [Min, Max, Avg, Med] \n 10:";
+        int counter = 0;
+        StringBuilder statsString = new StringBuilder(startString);
+        for(Object i: results) {
+            if(counter == 4) {
+                statsString.append("\n 100:");
+            }
+            if(counter == 8) {
+                statsString.append("\n All:");
+            }
+            counter = counter + 1;
+            statsString.append(i);
+            statsString.append(", ");
+        }
+        return statsString;
+    }
+
+    //https://developer.android.com/guide/components/intents-common.html 10-04-15
+    public void composeEmail(String subject, String info) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setType("text/plain");
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, info);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 
