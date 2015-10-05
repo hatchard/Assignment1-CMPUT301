@@ -102,6 +102,14 @@ public class Statistics extends AppCompatActivity {
             statsString.append(i);
             statsString.append(", ");
         }
+        statsString.append("\n \n");
+        statsString.append("[0,0,0,0] for players [1:2:3:4]\n");
+        statsString.append("2 player mode: ");
+        statsString.append(oldWinnerList.get("2player"));
+        statsString.append("\n 3 player mode: ");
+        statsString.append(oldWinnerList.get("3player"));
+        statsString.append("\n 4 player mode: ");
+        statsString.append(oldWinnerList.get("4player"));
         return statsString;
     }
 
