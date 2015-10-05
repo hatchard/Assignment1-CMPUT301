@@ -89,12 +89,31 @@ public class SortStats {
     }
 
     public void sortAll(ArrayList all) {
+        Long zeros = Long.valueOf(0);
         Collections.sort(all);
-        int midIndex = (all.size() / 2);
-        maxAll = (Long) Collections.max(all);
-        minAll = (Long) Collections.min(all);
-        medAll = (Long) all.get(midIndex); //get middle number
-        avgAll = calculateAverage(all);
+        ArrayList subAll = new ArrayList();
+        // get rid of the zero place holders
+        int zeroFrequency = Collections.frequency(all, zeros);
+        if(zeroFrequency != 0) {
+            for(Object i:all){
+                if(i.equals(zeros)){}
+                else {
+                    subAll.add(i);
+                }
+            }
+            int midIndex = (subAll.size() / 2);
+            maxAll = (Long) Collections.max(subAll);
+            minAll = (Long) Collections.min(subAll);
+            medAll = (Long) all.get(midIndex); //get middle number
+            avgAll = calculateAverage(subAll);
+
+        } else {
+            int midIndex = (all.size() / 2);
+            maxAll = (Long) Collections.max(all);
+            minAll = (Long) Collections.min(all);
+            medAll = (Long) all.get(midIndex); //get middle number
+            avgAll = calculateAverage(all);
+        }
 
     }
 
