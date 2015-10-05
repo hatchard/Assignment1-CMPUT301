@@ -47,7 +47,6 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
         //yourTime = new ReactionTimer();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reaction_timer);
-        preReaction();
 
         final AlertDialog.Builder popUp = new AlertDialog.Builder(this);
         popUp.setMessage("When prompted to go click 'CLICK!' as quickly as you can!").setPositiveButton("Play now!", new DialogInterface.OnClickListener() {
