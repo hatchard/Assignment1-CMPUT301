@@ -65,7 +65,7 @@ public class Statistics extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });*/
-/*
+
         clearButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Long temp = Long.valueOf(0);
@@ -74,12 +74,12 @@ public class Statistics extends AppCompatActivity {
                 results.clear();
                 results.add(temp);
                 saveInFile(getBaseContext());
-                displayStats(results);
-                oldWinnerList.clear();
+                makeStartList(getBaseContext());
                 saveInBuzzerFile(getBaseContext());
+                displayStats(results);
                 displayBuzzerStats();
             }
-        });*/
+        });
         loadFromBuzzerFile(getBaseContext());
         loadFromFile(getBaseContext());
         results = sortStats.sortIt(oldTimesArray);
@@ -215,8 +215,8 @@ public class Statistics extends AppCompatActivity {
     }
 
     public void displayStats(ArrayList<Long> results) {
-        if(results.size() < 10){
-            int addFill = 10 - results.size();
+        if(results.size() < 12){
+            int addFill = 12 - results.size();
             Long temp = Long.valueOf(0);
             for(int i = 0; i < addFill; i++){
                 results.add(temp);
