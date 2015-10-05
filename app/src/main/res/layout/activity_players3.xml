@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Player 1"
         android:id="@+id/button8"
+        android:background="#fff000"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:onClick="showWinner"/>
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Player 2"
         android:id="@+id/button9"
+        android:background="#002eb8"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/textView3"
         android:layout_alignParentStart="true"
@@ -33,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Player 3"
+        android:background="#ff0000"
         android:id="@+id/button10"
         android:layout_below="@+id/button9"
         android:layout_toEndOf="@+id/textView3"

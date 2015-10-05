@@ -3,12 +3,14 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#4b0082"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.mycompany.assignment1.ReactionTimer">
 
     <TextView android:text="@string/be_ready" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView5" />
+        android:id="@+id/textView5"
+        android:textSize="25dp" />
 
     <Button
         android:layout_width="match_parent"
@@ -17,7 +19,10 @@
         android:id="@+id/button15"
         android:layout_below="@+id/textView5"
         android:layout_toEndOf="@+id/textView5"
+        android:background="#ff00ff"
         android:layout_marginTop="98dp"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="60dp" />
 
 </RelativeLayout>
