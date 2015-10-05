@@ -26,62 +26,96 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 import android.widget.AdapterView;
 
 public class Statistics extends AppCompatActivity {
     //Save Reaction Times
 
+
     //declaring so many variables and things
     public SortStats sortStats = new SortStats();
     private static final String FILENAME = "reactionTimerStats";
-    private ArrayList<Long> timesArray = new ArrayList<>(); //took out specifics for now
+    private static final String BUZZERFILENAME = "buzzerStats";
+    public static HashMap<String, ArrayList> oldWinnerList;
     public ArrayList<Long> oldTimesArray = new ArrayList<>(); //makes a list for the file to load to
+    public ArrayList results = new ArrayList<>(); //stores min,max,avg, med of each
+    public HashMap<String, ArrayList> resultsB = new HashMap<>(); //stores each players wins
+    //initialize array lists for in the hashmap
+    public static ArrayList players2;
+    public static ArrayList players3;
+    public static ArrayList players4;
+    boolean initialized;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        loadFromFile(); //get the stuff from the file if anything in there so that it can be displayed
+        initialized = false;
+        displayBuzzerStats(); //will have to go into buzzer before can go into stats this way..
 
-        //Button emailButton = (Button) findViewById(R.id.email);
-       // Button clearButton = (Button) findViewById(R.id.clear);
-       // timesList = (ListView) findViewById(R.id.); //will need to find a way to generalize this
-        /*
-        emailButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setResult(RESULT_OK);
-                String text = bodyText.getText().toString();
-                tweets.add(new NormalTweet(text));
-                saveInFile();
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                timesArray.clear();
-                saveInFile();
-                //adapter.notifyDataSetChanged();
-            }
-        });*/
+        //loadFromFile(); //get the stuff from the file if anything in there so that it can be displayed
     }
 
 
+    public void makeStartList() {
+        players2 = new ArrayList();
+        players3 = new ArrayList();
+        players4 = new ArrayList();
+        oldWinnerList = new HashMap<>();
+        players2.add(0);
+        players2.add(0);
+        oldWinnerList.put("2player", players2);
+        players3.add(0);
+        players3.add(0);
+        players3.add(0);
+        oldWinnerList.put("3player", players3);
+        players4.add(0);
+        players4.add(0);
+        players4.add(0);
+        players4.add(0);
+        oldWinnerList.put("4player", players4);
+
+    }
     //maybe i dont actually need this here? I'm really not even sure anymore..what is life?
     public void saveThatShit(Long saveIT, Context context) {
-        this.timesArray.add(saveIT); //add the new item to the list
+        //loadFromFile();
+        this.oldTimesArray.add(saveIT); //add the new item to the list
         saveInFile(context);
 
     }
-    private void loadFromFile() {
 
+    public void saveThatBuzzerShit(String playerMode, int winner, Context context) { //pass the winner in as the index so can use it as the index?
+        if(initialized == false){
+            makeStartList();
+            initialized = true;
+            saveInBuzzerFile(context);
+        }
+        loadFromBuzzerFile(context);
+        ArrayList whoWon = oldWinnerList.get(playerMode);
+        int previousWins;
+        try {
+            previousWins= (int) whoWon.get(winner) + 1;
+        } catch (NullPointerException e) {
+            previousWins = 1;
+        }
+        whoWon.set(winner, previousWins);
+        oldWinnerList.put(playerMode,whoWon);
+        saveInBuzzerFile(context);
+    }
+        private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             //https://google-gson.googlecode.com/svn/trunk/gsn/docs/javadocs/com/google/gson/Gson.html, 2015-09-23l
             Type arrayListType = new TypeToken<ArrayList<Long>>() {}.getType();
-            oldTimesArray = gson.fromJson(in,arrayListType);
-            sortStats.sortIt(oldTimesArray);
+            oldTimesArray = gson.fromJson(in, arrayListType);
+                results = sortStats.sortIt(oldTimesArray);
+                displayStats(results);
 
 
         } catch (FileNotFoundException e) {
@@ -93,14 +127,115 @@ public class Statistics extends AppCompatActivity {
         }
     }
 
+    private void loadFromBuzzerFile(Context context) {
+        try {
+            FileInputStream fisB = context.openFileInput(BUZZERFILENAME);
+            BufferedReader inB = new BufferedReader(new InputStreamReader(fisB));
+            Gson gsonB = new Gson();
+            //https://google-gson.googlecode.com/svn/trunk/gsn/docs/javadocs/com/google/gson/Gson.html, 2015-09-23l
+            Type hashMapType = new TypeToken<HashMap<String, ArrayList<Integer>>>() {}.getType();
+            oldWinnerList = gsonB.fromJson(inB, hashMapType);
+            //resultsB = winTracker(oldWinnerList);
+            //displayBuzzerStats();
 
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            oldWinnerList = new HashMap<>();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
+
+    //public ArrayList winTracker(HashMap oldWinnerList){
+
+    //}
+    public void displayBuzzerStats(){
+        //wins for player 1 2player mode
+        TextView textviewB = (TextView) findViewById(R.id.row2col2b);
+        textviewB.setText(oldWinnerList.get("2player").get(0).toString());
+        //max10
+        /*
+        TextView textview1 = (TextView) findViewById(R.id.row3col2);
+        textview1.setText(results.get(1).toString());
+        //avg10
+        TextView textview2 = (TextView) findViewById(R.id.row4col2);
+        textview2.setText(results.get(2).toString());
+        //med10
+        TextView textview3 = (TextView) findViewById(R.id.row5col2);
+        textview3.setText(results.get(3).toString());
+        //min100
+        TextView textview4 = (TextView) findViewById(R.id.row2col3);
+        textview4.setText(results.get(4).toString());
+        //max100
+        TextView textview5 = (TextView) findViewById(R.id.row3col3);
+        textview5.setText(results.get(5).toString());
+        //avg100
+        TextView textview6 = (TextView) findViewById(R.id.row4col3);
+        textview6.setText(results.get(6).toString());
+        //med100
+        TextView textview7 = (TextView) findViewById(R.id.row5col3);
+        textview7.setText(results.get(7).toString());
+        //minAll
+        TextView textview8 = (TextView) findViewById(R.id.row2col4);
+        textview8.setText(results.get(8).toString());
+        //maxAll
+        TextView textview9 = (TextView) findViewById(R.id.row3col4);
+        textview9.setText(results.get(9).toString());
+        //avgAll
+        TextView textview10 = (TextView) findViewById(R.id.row4col4);
+        textview10.setText(results.get(10).toString());
+        //medAll
+        TextView textview11 = (TextView) findViewById(R.id.row5col4);
+        textview11.setText(results.get(11).toString());*/
+    }
+
+    public void displayStats(ArrayList<Long> results) {
+       //min10
+        TextView textview = (TextView) findViewById(R.id.row2col2);
+        textview.setText(results.get(0).toString());
+        //max10
+        TextView textview1 = (TextView) findViewById(R.id.row3col2);
+        textview1.setText(results.get(1).toString());
+        //avg10
+        TextView textview2 = (TextView) findViewById(R.id.row4col2);
+        textview2.setText(results.get(2).toString());
+        //med10
+        TextView textview3 = (TextView) findViewById(R.id.row5col2);
+        textview3.setText(results.get(3).toString());
+        //min100
+        TextView textview4 = (TextView) findViewById(R.id.row2col3);
+        textview4.setText(results.get(4).toString());
+        //max100
+        TextView textview5 = (TextView) findViewById(R.id.row3col3);
+        textview5.setText(results.get(5).toString());
+        //avg100
+        TextView textview6 = (TextView) findViewById(R.id.row4col3);
+        textview6.setText(results.get(6).toString());
+        //med100
+        TextView textview7 = (TextView) findViewById(R.id.row5col3);
+        textview7.setText(results.get(7).toString());
+        //minAll
+        TextView textview8 = (TextView) findViewById(R.id.row2col4);
+        textview8.setText(results.get(8).toString());
+        //maxAll
+        TextView textview9 = (TextView) findViewById(R.id.row3col4);
+        textview9.setText(results.get(9).toString());
+        //avgAll
+        TextView textview10 = (TextView) findViewById(R.id.row4col4);
+        textview10.setText(results.get(10).toString());
+        //medAll
+        TextView textview11 = (TextView) findViewById(R.id.row5col4);
+        textview11.setText(results.get(11).toString());
+
+    }
 
     private void saveInFile(Context context) {
         try {
             FileOutputStream fos = context.openFileOutput(FILENAME,Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
-            gson.toJson(this.timesArray, out);
+            gson.toJson(this.oldTimesArray, out);
             out.flush();
             fos.close();
         } catch (FileNotFoundException e) {
@@ -112,7 +247,22 @@ public class Statistics extends AppCompatActivity {
         }
     }
 
-
+    private void saveInBuzzerFile(Context context) {
+        try {
+            FileOutputStream fosB = context.openFileOutput(BUZZERFILENAME,Context.MODE_PRIVATE);
+            BufferedWriter outB = new BufferedWriter(new OutputStreamWriter(fosB));
+            Gson gsonB = new Gson();
+            gsonB.toJson(this.oldWinnerList, outB);
+            outB.flush();
+            fosB.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        }
+    }
 
 
 

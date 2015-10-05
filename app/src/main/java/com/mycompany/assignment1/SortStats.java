@@ -1,5 +1,6 @@
 package com.mycompany.assignment1;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,40 +17,69 @@ median time of all reaction times, the last 10 times, and the last 100 times.
  * Created by Me on 2015-10-03.
  */
 public class SortStats {
-    static Long max10, min10, avg10, med10;
-    Long max100, min100, avg100, med100;
-    Long maxAll, minAll, avgAll, medAll;
+    Long max10 = Long.valueOf(0);
+    Long min10 = Long.valueOf(0);
+    Long avg10= Long.valueOf(0);
+    Long med10 = Long.valueOf(0);
+    Long max100= Long.valueOf(0);
+    Long min100= Long.valueOf(0);
+    Long avg100= Long.valueOf(0);
+    Long med100 = Long.valueOf(0);
+    Long maxAll= Long.valueOf(0);
+    Long minAll= Long.valueOf(0);
+    Long avgAll= Long.valueOf(0);
+    Long medAll= Long.valueOf(0);
+    ArrayList<Long> results = new ArrayList<>();
 
     //sort the stats so that they can be displayed later
-    public void sortIt(ArrayList stats) {
+    public ArrayList sortIt(ArrayList stats) {
         ArrayList statsCopy = (ArrayList)stats.clone(); //?
+
 
         // sort by increasing to get max and min
         //if bigger than or atleast 100 have to do all three
-        if(statsCopy.size() >= 100) {
-            sort10(statsCopy);
-            sort100(statsCopy);
-            sortAll(statsCopy);
-        }
-        //have to do for 10 and all
-        if(10 < statsCopy.size() && statsCopy.size() <= 100){
-            sort10(statsCopy);
-            sortAll(statsCopy);
-        }
+
         //just for all
         if(statsCopy.size() < 10) {
             sortAll(statsCopy);
         }
+        //have to do for 10 and all
+        else if(statsCopy.size() <= 100){
+            sort10(statsCopy);
+            sortAll(statsCopy);
+        }
+        else if(statsCopy.size() >= 100) {
+            sort10(statsCopy);
+            sort100(statsCopy);
+            sortAll(statsCopy);
+        }
+
+
+        results.add(min10);
+        results.add(max10);
+        results.add(avg10);
+        results.add(med10);
+        results.add(min100);
+        results.add(max100);
+        results.add(avg100);
+        results.add(med100);
+        results.add(minAll);
+        results.add(maxAll);
+        results.add(avgAll);
+        results.add(medAll);
+
+        return results;
 
     }
 
     public void sortAll(ArrayList all) {
         Collections.sort(all);
-        int midIndex = all.size()/2 +1;
+        int midIndex = (all.size()/2);
         maxAll = (Long)Collections.max(all);
         minAll = (Long)Collections.min(all);
         medAll = (Long)all.get(midIndex); //get middle number
         avgAll = calculateAverage(all);
+
     }
 
     public void sort100(ArrayList last100) {
@@ -61,6 +91,7 @@ public class SortStats {
         min100 = (Long)Collections.min(miniList);
         med100 = (Long)miniList.get(49); //get middle number
         avg100 = calculateAverage(miniList);
+
     }
 
     public void sort10(ArrayList last10) {
@@ -86,4 +117,5 @@ public class SortStats {
         }
         return sum;
     }
+
 }
