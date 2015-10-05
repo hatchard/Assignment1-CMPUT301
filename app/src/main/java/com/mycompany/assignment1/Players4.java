@@ -49,7 +49,7 @@ public class Players4 extends AppCompatActivity {
         else if(winner.contains("2")){playerNum = 1;}
         else if(winner.contains("3")){playerNum = 2;}
         else{ playerNum = 3;}
-        stat.saveThatBuzzerShit("4player", playerNum, this.getBaseContext());
+        stat.saveBuzzerStuff("4player", playerNum, this.getBaseContext());
     }
 
     @Override

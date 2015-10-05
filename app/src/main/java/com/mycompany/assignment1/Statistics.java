@@ -169,7 +169,7 @@ public class Statistics extends AppCompatActivity {
 
     }
     //called from the reaction timer to start the process of saving the data into the file
-    public void saveThatShit(Long saveIT, Context context) {
+    public void saveStuff(Long saveIT, Context context) {
         if(oldTimesArray == null){
             makeStartList(context);
             saveInBuzzerFile(context);
@@ -181,7 +181,7 @@ public class Statistics extends AppCompatActivity {
     }
 
     //same thing except from the buzzer, so from all of the player modes
-    public void saveThatBuzzerShit(String playerMode, int winner, Context context) { //pass the winner in as the index so can use it as the index?
+    public void saveBuzzerStuff(String playerMode, int winner, Context context) { //pass the winner in as the index so can use it as the index?
         if(oldWinnerList == null){
             makeStartList(context);
             saveInBuzzerFile(context);

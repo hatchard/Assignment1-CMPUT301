@@ -117,7 +117,7 @@ public class ReactionTimer extends AppCompatActivity implements Reaction{
 
     //display pop u box with reaction time results
     public void reactionTimePopUp(Long totalTime){
-        stat.saveThatShit(totalTime, this.getBaseContext());
+        stat.saveStuff(totalTime, this.getBaseContext());
         AlertDialog.Builder popUp  = new AlertDialog.Builder(this);
         popUp.setMessage("Your reaction time was " + totalTime + " ms! ").setPositiveButton("Try again!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

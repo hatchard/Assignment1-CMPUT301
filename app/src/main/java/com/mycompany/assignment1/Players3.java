@@ -48,7 +48,7 @@ public class Players3 extends AppCompatActivity {
         if(winner.contains("1")){ playerNum = 0; }
         else if(winner.contains("2")){playerNum = 1;}
         else{ playerNum = 2;}
-        stat.saveThatBuzzerShit("3player", playerNum, this.getBaseContext());
+        stat.saveBuzzerStuff("3player", playerNum, this.getBaseContext());
     }
 
     @Override
