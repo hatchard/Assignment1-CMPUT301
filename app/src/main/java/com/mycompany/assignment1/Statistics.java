@@ -66,6 +66,7 @@ public class Statistics extends AppCompatActivity {
         //initialized = true;
         if(oldWinnerList == null){
             makeStartList(getBaseContext());
+            saveInBuzzerFile(getBaseContext()); //changed this?
         }
 
         Button emailButton = (Button) findViewById(R.id.email);
