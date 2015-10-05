@@ -1,0 +1,19 @@
+CMPUT 301 Assignment 1
+Jenna Hatchard
+hatchard
+
+This is a Android app that has a gameshow buzzer (with 2, 3, and 4 player options) and a reaction timer. 
+
+During the development of this app I consulted with:
+Andrea MkIntosh
+Dylan Ashley
+Anju Eappen
+
+References:
+Rudi Kershaw, //http://stackoverflow.com/questions/24610527/how-do-i-get-a-button-to-open-another-activity-in-android-studio 2015-09-26
+tronman, //http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android 2015-09-27
+Jesherun, //http://stackoverflow.com/questions/10791568/calculating-average-of-an-array-list 2015-10-03
+//https://google-gson.googlecode.com/svn/trunk/gsn/docs/javadocs/com/google/gson/Gson.html, 2015-09-23l
+
+Consulted CMPUT 301 forum posts, Android documentation, Java Documentation
+Abram Hindle, Student Picker Videos
