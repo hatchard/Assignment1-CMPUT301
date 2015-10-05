@@ -31,9 +31,8 @@ public class Statistics extends AppCompatActivity {
     private static final String FILENAME = "reactionTimerStats";
     private static final String BUZZERFILENAME = "buzzerStats";
     public static HashMap<String, ArrayList> oldWinnerList;
-    public ArrayList<Long> oldTimesArray = new ArrayList<>(); //makes a list for the file to load to
-    public ArrayList results = new ArrayList<>(); //stores min,max,avg, med of each
-    public HashMap<String, ArrayList> resultsB = new HashMap<>(); //stores each players wins
+    public ArrayList<Long> oldTimesArray;
+    public static ArrayList results;
     //initialize array lists for in the hashmap
     public static ArrayList players2;
     public static ArrayList players3;
@@ -45,8 +44,11 @@ public class Statistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         initialized = false;
+        //NEED TO FIGURE OUT HOW TO PASS THE CONTEXT TO THISSSSS
+        loadFromBuzzerFile(getBaseContext());
+        loadFromFile(getBaseContext());
         displayBuzzerStats(); //will have to go into buzzer before can go into stats this way..
-        //displayStats(); THIS WILL HAVE TO END UP HERE
+        displayStats(results); // THIS WILL HAVE TO END UP HERE
     }
 
 
@@ -54,7 +56,9 @@ public class Statistics extends AppCompatActivity {
         players2 = new ArrayList();
         players3 = new ArrayList();
         players4 = new ArrayList();
+        oldTimesArray = new ArrayList<>();
         oldWinnerList = new HashMap<>();
+        results = new ArrayList<>(); //stores min,max,avg, med of each
         players2.add(0);
         players2.add(0);
         oldWinnerList.put("2player", players2);
@@ -71,7 +75,12 @@ public class Statistics extends AppCompatActivity {
     }
     //maybe i dont actually need this here? I'm really not even sure anymore..what is life?
     public void saveThatShit(Long saveIT, Context context) {
-        //loadFromFile();
+        if(initialized == true){
+            makeStartList();
+            initialized = false;
+            saveInFile(context);
+        }
+        loadFromFile(context);
         this.oldTimesArray.add(saveIT); //add the new item to the list
         saveInFile(context);
 
@@ -95,16 +104,16 @@ public class Statistics extends AppCompatActivity {
         oldWinnerList.put(playerMode,whoWon);
         saveInBuzzerFile(context);
     }
-        private void loadFromFile() {
+        public void loadFromFile(Context context) {
         try {
-            FileInputStream fis = openFileInput(FILENAME);
+            FileInputStream fis = context.openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             //https://google-gson.googlecode.com/svn/trunk/gsn/docs/javadocs/com/google/gson/Gson.html, 2015-09-23l
             Type arrayListType = new TypeToken<ArrayList<Long>>() {}.getType();
             oldTimesArray = gson.fromJson(in, arrayListType);
-                results = sortStats.sortIt(oldTimesArray);
-                displayStats(results);
+            results = sortStats.sortIt(oldTimesArray);
+            //displayStats(results);
 
 
         } catch (FileNotFoundException e) {
@@ -172,6 +181,13 @@ public class Statistics extends AppCompatActivity {
     }
 
     public void displayStats(ArrayList<Long> results) {
+        if(results.size() < 10){
+            int addFill = 10 - results.size();
+            Long temp = Long.valueOf(0);
+            for(int i = 0; i < addFill; i++){
+                results.add(temp);
+            }
+        }
        //min10
         TextView textview = (TextView) findViewById(R.id.row2col2);
         textview.setText(results.get(0).toString());
